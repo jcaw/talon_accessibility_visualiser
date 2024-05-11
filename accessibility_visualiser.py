@@ -287,7 +287,8 @@ class Actions:
             is_searching_tree = False
         redraw_canvases()
 
-    def visualiser_copy_element_path():
+    # TODO: Just roll this into the gather at point function?
+    def visualiser_gather_at_point_and_copy():
         """Copy the ancestor path to the element at point, as text."""
         actions.self.visualiser_gather_at_point()
         with elements_list_lock:
