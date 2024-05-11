@@ -12,6 +12,10 @@ else:
     TYPEFACE = "monospace"
 
 
+class ElementNotFoundError(RuntimeError):
+    pass
+
+
 class Element(object):
     def __init__(self, e: ui.Element):
         self.rect = e.rect
@@ -225,7 +229,7 @@ def find_ancestors_slow(element):
                 return [Element(e) for e in [*ancestors, current, child]]
         for child in children:
             queue.put((child, [*ancestors, current, child]))
-    raise RuntimeError(f"`{element}` could not be found in ui tree.")
+    raise ElementNotFoundError(f"`{element}` could not be found in ui tree.")
 
 
 def find_ancestors_fast(element):
@@ -272,7 +276,7 @@ class Actions:
             else:
                 try:
                     elements = find_ancestors_slow(base_element)
-                except ValueError:
+                except ElementNotFoundError:
                     pass
         else:
             elements = []
