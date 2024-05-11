@@ -88,17 +88,7 @@ def draw(c: canvas.Canvas):
         box_stroke = "#FF0000"
         # Looks orange unless we offset the balance
         text_color = "#FF4466"
-    box_fill = box_stroke + "11"
-
-    paint.stroke_width = 3
-    paint.style = paint.Style.STROKE
-    paint.color = "#000000"
-    for i, text in enumerate(text_components):
-        c.draw_text(text, x, base_y + i * padded_row_height)
-    paint.style = paint.Style.FILL
-    paint.color = text_color
-    for i, text in enumerate(text_components):
-        c.draw_text(text, x, base_y + i * padded_row_height)
+    box_fill = box_stroke + "07"
 
     paint.style = paint.Style.STROKE
     paint.stroke_width = 2
@@ -110,6 +100,16 @@ def draw(c: canvas.Canvas):
         paint.style = paint.Style.FILL
         paint.color = box_fill
         c.draw_rrect(rrect)
+
+    paint.stroke_width = 3
+    paint.style = paint.Style.STROKE
+    paint.color = "#000000"
+    for i, text in enumerate(text_components):
+        c.draw_text(text, x, base_y + i * padded_row_height)
+    paint.style = paint.Style.FILL
+    paint.color = text_color
+    for i, text in enumerate(text_components):
+        c.draw_text(text, x, base_y + i * padded_row_height)
 
 
 module = Module()
