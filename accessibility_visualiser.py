@@ -34,6 +34,23 @@ is_searching_tree = False
 elements_list_lock = threading.Lock()
 
 
+def get_text_components(elements, is_searching_tree_=False):
+    text_components = []
+    for i, element in enumerate(elements):
+        if is_searching_tree_:
+            component = "Finding ancestors for element: " + str(element)
+        else:
+            if i == len(elements) - 1:
+                prefix = "└─"
+            elif i > 0:
+                prefix = "└┬─"
+            else:
+                prefix = "┬─"
+            component = " " * (i - 1) + prefix + str(element)
+        text_components.append(component)
+    return text_components
+
+
 def draw(c: canvas.Canvas):
     paint = c.paint
     with elements_list_lock:
@@ -52,17 +69,13 @@ def draw(c: canvas.Canvas):
     text_components = []
     row_width = 0
     row_height = 0
-    for i, element in enumerate(elements_list_):
-        if is_searching_tree_:
-            component = "Finding ancestors for element: " + str(element)
-        else:
-            component = " " * (i - 1) + ("|-" if i > 0 else "-") + str(element)
-        text_components.append(component)
+    text_components = get_text_components(elements_list_, is_searching_tree_)
+    for component in text_components:
         # HACK: `paint.measure_text` doesn't measure spaces, so replace them.
         dims = paint.measure_text(component.replace(" ", "-"))[1]
         row_width = max(row_width, dims.width)
         row_height = max(row_height, dims.height)
-    padded_row_height = row_height * 1.3
+    padded_row_height = row_height * 1.05
 
     if mouse_pos_.x > c.rect.x + c.rect.width / 2:
         x = c.rect.x + x_padding
@@ -293,7 +306,7 @@ class Actions:
         actions.self.visualiser_gather_at_point()
         with elements_list_lock:
             elements = elements_list
-        clip.set_text(text_path(elements))
+        clip.set_text("\n".join(get_text_components(elements)))
 
     def visualiser_close():
         """Destroy the visualiser canvases, and exit the visualiser."""
