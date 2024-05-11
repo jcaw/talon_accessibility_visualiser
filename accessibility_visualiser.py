@@ -231,8 +231,7 @@ def find_ancestors_slow(element):
 def find_ancestors_fast(element):
     elements = [element]
     while True:
-        # FIXME: Find the parent of the element, or otherwise find a way to get
-        #  ancestors. This method on `element` doesn't actually exist.
+        # NOTE: This method seems to only exist on Mac
         parent = element.parent
         if not parent:
             break
@@ -263,7 +262,12 @@ class Actions:
                 is_searching_tree = True
             redraw_canvases()
 
-            if app.platform == "mac":
+            # `Element.parent` doesn't seem to exist on Windows - only seems to
+            # exist on Mac. The fast method requires it.
+            #
+            # (This approach of checking for the method will fail if it's just
+            # stubbed on Windows in a future Talon release.)
+            if hasattr(ui.Element, "parent"):
                 elements = find_ancestors_fast(base_element)
             else:
                 try:
