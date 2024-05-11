@@ -307,6 +307,9 @@ class Actions:
         with elements_list_lock:
             elements = elements_list
         clip.set_text("\n".join(get_text_components(elements)))
+        app.notify(
+            "Talon", "Accessibility element ancestry information copied to clipboard."
+        )
 
     def visualiser_close():
         """Destroy the visualiser canvases, and exit the visualiser."""
