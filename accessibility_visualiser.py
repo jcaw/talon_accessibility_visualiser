@@ -295,5 +295,9 @@ class Actions:
             elements = elements_list
         clip.set_text(text_path(elements))
 
+    def visualiser_close():
+        """Destroy the visualiser canvases, and exit the visualiser."""
+        destroy_canvases()
+
 
 # cron.interval("5s", actions.self.visualiser_gather_at_point)
