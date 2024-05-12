@@ -40,7 +40,9 @@ def get_text_components(elements, is_searching_tree_=False):
         if is_searching_tree_:
             component = "Finding ancestors for element: " + str(element)
         else:
-            if i == len(elements) - 1:
+            if len(elements) == 1:
+                prefix = "──"
+            elif i == len(elements) - 1:
                 prefix = "└──"
             elif i > 0:
                 prefix = "└┬─"
