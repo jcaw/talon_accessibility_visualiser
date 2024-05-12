@@ -108,6 +108,7 @@ def draw(c: canvas.Canvas):
         text_color = "#FF4466"
     box_fill = box_stroke + "07"
 
+    # Draw the bounding boxes of the element and its ancestors
     paint.style = paint.Style.STROKE
     paint.stroke_width = 2
     for element in elements_list_:
@@ -119,6 +120,21 @@ def draw(c: canvas.Canvas):
         paint.color = box_fill
         c.draw_rrect(rrect)
 
+    # Draw the background box for the text
+    paint.style = paint.Style.FILL
+    paint.color = "#FFFA"
+    background_rect = Rect(
+        x - x_padding,
+        base_y - row_height * 0.8 - y_padding,
+        row_width + x_padding * 2,
+        padded_row_height * len(text_components) + y_padding * 2,
+    )
+    c.draw_rect(background_rect)
+    paint.style = paint.Style.STROKE
+    paint.color = "#000B"
+    c.draw_rect(background_rect)
+
+    # Draw the text itself, the path to the element.
     paint.stroke_width = 3
     paint.style = paint.Style.STROKE
     paint.color = "#000000"
