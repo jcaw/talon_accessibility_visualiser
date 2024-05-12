@@ -92,7 +92,12 @@ def draw(c: canvas.Canvas):
         )
     else:
         # TODO: Shift properly to the bottom
-        base_y = c.rect.y + row_height + y_padding
+        # HACK: Reduce the row height since it doesn't take into account full
+        #   text height
+        # TODO: Calculate the actual row height offset - it isn't offset by the
+        #   full height, it's offset only by the height of the main character
+        #   body.
+        base_y = c.rect.y + row_height * 0.8 + y_padding
 
     if is_searching_tree:
         box_stroke = "#00FFFF"
