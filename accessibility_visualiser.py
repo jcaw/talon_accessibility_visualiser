@@ -107,7 +107,8 @@ def draw(c: canvas.Canvas):
     else:
         box_stroke = "#FF0000"
         # Looks orange unless we offset the balance
-        text_color = "#FF4466"
+        # text_color = "#FF4466"
+        text_color = "#FF7788"
     box_fill = box_stroke + "07"
 
     # Draw the bounding boxes of the element and its ancestors
@@ -124,7 +125,7 @@ def draw(c: canvas.Canvas):
 
     # Draw the background box for the text
     paint.style = paint.Style.FILL
-    paint.color = "#FFFA"
+    paint.color = "#DEFE"
     background_rect = Rect(
         x - x_padding,
         base_y - row_height * 0.8 - y_padding,
