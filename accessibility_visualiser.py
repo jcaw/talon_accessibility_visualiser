@@ -189,6 +189,11 @@ def redraw_canvases():
 
 def same_element(a, b):
     """Do two accessibility elements appear to be the same element?"""
+    # TODO: Maybe test on Mac? Might just be unecessary because we can simply
+    #  use `element.parent` to find ancestors.
+    # if ui.platform in ["mac"]:
+    #     return a == b
+
     try:
         a_handle = a.window_handle
     except OSError:
