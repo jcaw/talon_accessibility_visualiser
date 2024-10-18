@@ -303,11 +303,9 @@ class Actions:
                 is_searching_tree = True
             redraw_canvases()
 
-            # `Element.parent` doesn't seem to exist on Windows - only seems to
-            # exist on Mac. The fast method requires it.
-            #
-            # (This approach of checking for the method will fail if it's just
-            # stubbed on Windows in a future Talon release.)
+            # `Element.parent` didn't exist on Windows at the time of writing,
+            # just on Mac, so a flexible approach is used. It has since been
+            # added but this is left just in case.
             if hasattr(ui.Element, "parent"):
                 elements = find_ancestors_fast(base_element)
             else:
