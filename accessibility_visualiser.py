@@ -18,10 +18,13 @@ class ElementNotFoundError(RuntimeError):
 
 class Element(object):
     def __init__(self, e: ui.Element):
-        self.rect = e.rect
+        if hasattr(e, "rect"):
+            self.rect = e.rect
+        else:
+            self.rect = None
         try:
             self.text = f'Name: "{e.name}": Class: "{e.class_name}"'
-        except OSError:
+        except (OSError, AttributeError):
             self.text = str(e)
 
     def __str__(self):
@@ -278,12 +281,15 @@ def find_ancestors_fast(element):
     elements = [element]
     while True:
         # NOTE: This method seems to only exist on Mac
-        parent = element.parent
-        if not parent:
+        if hasattr(element, "parent"):
+            parent = element.parent
+        else:
+            parent = None
+        if not parent or parent == element:
             break
         elements.append(Element(parent))
         element = parent
-    return reversed(elements)
+    return list(reversed(elements))
 
 
 @module.action_class
@@ -311,7 +317,9 @@ class Actions:
             # `Element.parent` didn't exist on Windows at the time of writing,
             # just on Mac, so a flexible approach is used. It has since been
             # added but this is left just in case.
-            if hasattr(ui.Element, "parent"):
+            #
+            # FIXME: Seems to hang on windows. Figure out why.
+            if hasattr(ui.Element, "parent") and not ui.platform == "windows":
                 elements = find_ancestors_fast(base_element)
             else:
                 try:
