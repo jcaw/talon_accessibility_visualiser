@@ -2,7 +2,8 @@ import threading
 from queue import LifoQueue
 from typing import List
 
-from talon import ui, canvas, Module, Context, app, skia, ctrl, actions, cron, clip
+import skia
+from talon import ui, canvas, Module, Context, app, ctrl, actions, cron, clip
 from talon.ui import Point2d, Rect
 
 
